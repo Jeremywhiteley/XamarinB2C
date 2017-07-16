@@ -1,0 +1,14 @@
+﻿{
+  "dependencies": {
+    "Microsoft.Identity.Client": "1.1.0-preview",
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "10.0.3",
+    "Xamarin.Forms": "2.3.4.247"
+  },
+  "frameworks": {
+    "netstandard1.5": {
+      "imports": "portable-net45+wp80+win8+wpa81"
+    }
+  }
+}

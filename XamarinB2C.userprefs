@@ -1,0 +1,23 @@
+﻿<Properties StartupConfiguration="{43CF17AA-B0F1-44AC-90C0-252E461B011A}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+  <MonoDevelop.Ide.Workbench ActiveDocument="XamarinB2C.Core/MainPage.xaml">
+    <Files>
+      <File FileName="XamarinB2C.Core/App.xaml.cs" Line="36" Column="59" />
+      <File FileName="XamarinB2C.Core/App.xaml" Line="19" Column="1" />
+      <File FileName="XamarinB2C.Core/MainPage.xaml" Line="14" Column="26" />
+      <File FileName="XamarinB2C.Core/MainPage.xaml.cs" Line="137" Column="36" />
+      <File FileName="iOS/AppDelegate.cs" Line="26" Column="26" />
+      <File FileName="iOS/Info.plist" />
+      <File FileName="iOS/Main.cs" Line="17" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/dhiru/Desktop/MedText/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="121" column="1" />
+      <Breakpoint file="/Users/dhiru/Desktop/MedText/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="126" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.XamarinB2C.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.b3f90cd458442d4829d284a0d87d1ef85b4a1020" />
+</Properties>
