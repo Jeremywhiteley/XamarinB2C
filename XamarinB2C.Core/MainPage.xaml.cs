@@ -10,47 +10,81 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace XamarinB2C
 {
     public partial class MainPage : ContentPage
     {
-        
+
+		//Aspuru
+		public bool loggingUser;
+		public bool loggedUser;
+
         public MainPage()
         {
             InitializeComponent();
+			loggingUser = false;
+			loggedUser = false;
         }
         protected override async void OnAppearing()
         {
-            UpdateSignInState(false);
+
+            //Aspuru: I commented this line
+            //UpdateSignInState(false);
 
             // Check to see if we have a User
             // in the cache already.
-            try
-            {
-                
-                AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.Authority, false);
-                UpdateUserInfo(ar);
-                UpdateSignInState(true);
-            }
-            catch (Exception ex)
-            {
-                // Uncomment for debugging purposes
-                //await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
 
-                // Doesn't matter, we go in interactive mode
-                UpdateSignInState(false);
+            if (loggingUser == false && loggedUser == false)
+            {
+
+                try
+                {
+
+                    //AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.Authority, false);
+                    //Aspuru
+                    AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(
+                        App.Scopes,
+                        GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn),
+                        App.Authority, false);
+
+                    UpdateUserInfo(ar);
+                    UpdateSignInState(true);
+                }
+                catch (Exception ex)
+                {
+                    // Uncomment for debugging purposes
+                    //await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
+
+                    //Aspuru: Added for debugging
+                    Debug.WriteLine("Exception:", ex.ToString());
+
+                    // Doesn't matter, we go in interactive mode
+                    UpdateSignInState(false);
+                }
             }
         }
         async void OnSignInSignOut(object sender, EventArgs e)
         {
+            loggingUser = true;
             try
             {
                 if (btnSignInSignOut.Text == "Sign in")
                 {
-                    AuthenticationResult ar = await App.PCA.AcquireTokenAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
-                    UpdateUserInfo(ar);
+					//AuthenticationResult ar = await App.PCA.AcquireTokenAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
+
+					//Aspuru
+					AuthenticationResult ar = await App.PCA.AcquireTokenAsync(
+						App.Scopes,
+						GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
+
+
+
+					UpdateUserInfo(ar);
                     UpdateSignInState(true);
+                    loggingUser = false;
+                    loggedUser = true;
                 }
                 else
                 {
@@ -63,10 +97,15 @@ namespace XamarinB2C
             }
             catch(Exception ex)
             {
-                // Checking the exception message 
-                // should ONLY be done for B2C
-                // reset and not any other error.
-                if (ex.Message.Contains("AADB2C90118"))
+
+				//Aspuru: Added for debugging
+				Debug.WriteLine("Exception:", ex.ToString());
+
+
+				// Checking the exception message 
+				// should ONLY be done for B2C
+				// reset and not any other error.
+				if (ex.Message.Contains("AADB2C90118"))
                     OnPasswordReset();
                 // Alert if any exception excludig user cancelling sign-in dialog
                 else if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
@@ -134,11 +173,20 @@ namespace XamarinB2C
             }
             catch (MsalUiRequiredException ex)
             {
-                await DisplayAlert($"Session has expired, please sign out and back in.", ex.ToString(), "Dismiss");
+				//Aspuru: Added for debugging
+				Debug.WriteLine("Exception:", ex.ToString());
+
+
+				await DisplayAlert($"Session has expired, please sign out and back in.", ex.ToString(), "Dismiss");
             }
             catch (Exception ex)
             {
-                await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
+
+				//Aspuru: Added for debugging
+				Debug.WriteLine("Exception:", ex.ToString());
+
+
+				await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
 
@@ -154,8 +202,13 @@ namespace XamarinB2C
             }
             catch (Exception ex)
             {
-                // Alert if any exception excludig user cancelling sign-in dialog
-                if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
+
+				//Aspuru: Added for debugging
+				Debug.WriteLine("Exception:", ex.ToString());
+
+
+				// Alert if any exception excludig user cancelling sign-in dialog
+				if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
                     await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }

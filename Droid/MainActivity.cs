@@ -7,6 +7,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Microsoft.Identity.Client;
 
 namespace XamarinB2C.Droid
 {
@@ -23,11 +24,18 @@ namespace XamarinB2C.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             LoadApplication(new App());
+
+			//Azure Active Directory B2C
+			App.UiParent = new UIParent(Xamarin.Forms.Forms.Context as Activity);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-        }
+
+			//Aspuru: AZURE B2C
+			AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+
+		}
     }
 }
