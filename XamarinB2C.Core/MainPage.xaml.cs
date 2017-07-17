@@ -115,7 +115,7 @@ namespace XamarinB2C
             {
                 lblApi.Text = $"Calling API {App.ApiEndpoint}";
                 AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.Authority, false);
-                string token = ar.IdToken;
+                string token = ar.AccessToken;
 
                 // Get data from API
                 HttpClient client = new HttpClient();

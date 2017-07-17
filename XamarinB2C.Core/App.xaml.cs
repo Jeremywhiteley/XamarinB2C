@@ -19,8 +19,8 @@ namespace XamarinB2C
 		public static string PolicyEditProfile = "b2c_1_edit_profile";
 		public static string PolicyResetPassword = "b2c_1_reset";
 
-		public static string[] Scopes = { "https://MedB2CTenent.onmicrosoft.com/demoapi/demo.read" };//{ "https://fabrikamb2c.onmicrosoft.com/demoapi/demo.read" };
-		public static string ApiEndpoint = "http://b2capidev.azurewebsites.net/api/values";//"https://fabrikamb2chello.azurewebsites.net/hello";
+		public static string[] Scopes = { "https://MedB2CTenent.onmicrosoft.com/demoapi/read" };//{ "https://fabrikamb2c.onmicrosoft.com/demoapi/demo.read" };
+		public static string ApiEndpoint = "https://b2capidev.azurewebsites.net/api/values";//"https://fabrikamb2chello.azurewebsites.net/hello";
 
 		public static string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 		public static string Authority = $"{AuthorityBase}{PolicySignUpSignIn}";

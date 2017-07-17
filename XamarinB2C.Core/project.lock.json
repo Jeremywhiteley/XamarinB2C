@@ -5363,10 +5363,10 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "/Users/dhiru/Desktop/MedText/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
+      "projectUniqueName": "/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
       "projectName": "XamarinB2C",
-      "projectPath": "/Users/dhiru/Desktop/MedText/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
-      "projectJsonPath": "/Users/dhiru/Desktop/MedText/XamarinB2C/XamarinB2C.Core/project.json",
+      "projectPath": "/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
+      "projectJsonPath": "/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
