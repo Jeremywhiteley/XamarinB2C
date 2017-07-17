@@ -1,24 +1,24 @@
-﻿<Properties StartupConfiguration="{43CF17AA-B0F1-44AC-90C0-252E461B011A}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.Workbench ActiveDocument="XamarinB2C.Core/MainPage.xaml.cs">
+﻿<Properties StartupConfiguration="{43CF17AA-B0F1-44AC-90C0-252E461B011A}|Default" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workbench ActiveDocument="XamarinB2C Status">
     <Files>
-      <File FileName="XamarinB2C.Core/App.xaml.cs" Line="41" Column="1" />
-      <File FileName="XamarinB2C.Core/App.xaml" Line="19" Column="1" />
+      <File FileName="XamarinB2C.Core/App.xaml.cs" Line="23" Column="85" />
       <File FileName="XamarinB2C.Core/MainPage.xaml" Line="30" Column="15" />
-      <File FileName="XamarinB2C.Core/MainPage.xaml.cs" Line="134" Column="14" />
-      <File FileName="iOS/AppDelegate.cs" Line="26" Column="26" />
-      <File FileName="iOS/Info.plist" />
-      <File FileName="iOS/Main.cs" Line="17" Column="1" />
+      <File FileName="XamarinB2C.Core/MainPage.xaml.cs" Line="147" Column="48" />
+      <File FileName="../../Certificc/Certificc/Views/UserSettingsPage.xaml.cs" Line="34" Column="17" />
+      <File FileName="XamarinB2C Status" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="121" column="1" />
-      <Breakpoint file="/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="126" column="1" />
-      <Breakpoint file="/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="52" column="1" />
+      <Breakpoint file="/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="175" column="1" />
+      <Breakpoint file="/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="183" column="1" />
+      <Breakpoint file="/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="204" column="1" />
+      <Breakpoint file="/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="223" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.XamarinB2C.Droid PreferredExecutionTarget="Android.LGK500eecea6e5" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.XamarinB2C.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F34A2381-8674-44AC-B0CA-226B7226027D" />
+  <MonoDevelop.Ide.ItemProperties.XamarinB2C.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.770dc922090ffd8161c781f3f36ac2c96bd3dc86" />
 </Properties>

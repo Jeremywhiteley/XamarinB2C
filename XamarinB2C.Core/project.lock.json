@@ -5359,14 +5359,14 @@
     ".NETStandard,Version=v1.5": []
   },
   "packageFolders": {
-    "/Users/dhiru/.nuget/packages/": {}
+    "/Users/daniel/.nuget/packages/": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
+      "projectUniqueName": "/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
       "projectName": "XamarinB2C",
-      "projectPath": "/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
-      "projectJsonPath": "/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/project.json",
+      "projectPath": "/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/XamarinB2C.csproj",
+      "projectJsonPath": "/Users/daniel/Projects/Jeremy/XamarinB2C/XamarinB2C.Core/project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
