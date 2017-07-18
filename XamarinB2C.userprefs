@@ -4,13 +4,13 @@
       <File FileName="XamarinB2C.Core/App.xaml.cs" Line="41" Column="1" />
       <File FileName="XamarinB2C.Core/App.xaml" Line="19" Column="1" />
       <File FileName="XamarinB2C.Core/MainPage.xaml" Line="30" Column="15" />
-      <File FileName="XamarinB2C.Core/MainPage.xaml.cs" Line="134" Column="14" />
+      <File FileName="XamarinB2C.Core/MainPage.xaml.cs" Line="155" Column="33" />
       <File FileName="iOS/AppDelegate.cs" Line="26" Column="26" />
       <File FileName="iOS/Info.plist" />
       <File FileName="iOS/Main.cs" Line="17" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/dhiru/Desktop/MedText/XamarinB2cClone/XamarinB2C/XamarinB2C.Core/MainPage.xaml.cs" relfile="XamarinB2C.Core/MainPage.xaml.cs" line="121" column="1" />
@@ -20,5 +20,5 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.XamarinB2C.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F34A2381-8674-44AC-B0CA-226B7226027D" />
+  <MonoDevelop.Ide.ItemProperties.XamarinB2C.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.b3f90cd458442d4829d284a0d87d1ef85b4a1020" />
 </Properties>
