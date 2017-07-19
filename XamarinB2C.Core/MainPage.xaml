@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <BoxView Color="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-            <StackLayout x:Name="slUser" IsVisible="False" Padding="5,10">
+            <StackLayout x:Name="slUser" IsVisible="true" Padding="5,10">
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Name " FontAttributes="Bold" />
                     <Label x:Name="lblName" />
@@ -19,6 +19,18 @@
                     <Label Text="API Payload " FontAttributes="Bold" />
                     <Label x:Name="lblApi" />
                 </StackLayout>
+                <ListView x:Name="lst" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" ></Label>
+                            </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                </ListView.ItemTemplate>
+                        
+                </ListView>
             </StackLayout>
             <BoxView Color="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
             <Button x:Name="btnEditProfile" Text="Edit Profile" Clicked="OnEditProfile" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>

@@ -20,12 +20,19 @@ namespace XamarinB2C
 		public static string PolicyResetPassword = "b2c_1_reset";
 
 		public static string[] Scopes = { "https://MedB2CTenent.onmicrosoft.com/demoapi/read" };//{ "https://fabrikamb2c.onmicrosoft.com/demoapi/demo.read" };
-		public static string ApiEndpoint = "https://b2capidev.azurewebsites.net/api/values";//"https://fabrikamb2chello.azurewebsites.net/hello";
+		public static string ApiEndpoint = "http://b2capidev.azurewebsites.net/api/values";//"https://fabrikamb2chello.azurewebsites.net/hello";
 
 		public static string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 		public static string Authority = $"{AuthorityBase}{PolicySignUpSignIn}";
 		public static string AuthorityEditProfile = $"{AuthorityBase}{PolicyEditProfile}";
 		public static string AuthorityPasswordReset = $"{AuthorityBase}{PolicyResetPassword}";
+
+
+		public static readonly string EndpointUri = "https://b2cdev.documents.azure.com:443/";
+		public static readonly string DatabaseName = "ToDoList";
+		public static readonly string CollectionName = "Items";
+		public static string accKey = "4qIWjbeQc3QB8ukxRQXtrYer4VZLVzlwcwXxYVrXt1kqf0s4obpLER49oC3Fx9RTOV2VS9q0vsLCf4S6yAgQTQ==";
+
 
 		public static UIParent UiParent = null;
         public App()
