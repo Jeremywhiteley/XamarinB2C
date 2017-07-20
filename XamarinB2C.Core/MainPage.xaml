@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:local="clr-namespace:UserDetailsClient;assembly=UserDetailsClient"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="XamarinB2C.MainPage">
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:local="clr-namespace:UserDetailsClient;assembly=UserDetailsClient" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="XamarinB2C.MainPage">
     <ContentPage.Content>
         <StackLayout>
             <BoxView Color="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-            <StackLayout x:Name="slUser" IsVisible="true" Padding="5,10">
+            <StackLayout x:Name="slUser" IsVisible="false" Padding="5,10">
                 <StackLayout Orientation="Horizontal">
                     <Label Text="Name " FontAttributes="Bold" />
                     <Label x:Name="lblName" />
@@ -19,24 +16,24 @@
                     <Label Text="API Payload " FontAttributes="Bold" />
                     <Label x:Name="lblApi" />
                 </StackLayout>
-                <ListView x:Name="lst" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
+                <ListView x:Name="lst" BackgroundColor="White" SeparatorVisibility="None" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid>
-                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}" ></Label>
-                            </Grid>
+                                <Grid Padding="20,0,0,0">
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}">
+                                    </Label>
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
-                </ListView.ItemTemplate>
-                        
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
             <BoxView Color="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
-            <Button x:Name="btnEditProfile" Text="Edit Profile" Clicked="OnEditProfile" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
-            <Button x:Name="btnCallApi" Text="Call API" Clicked="OnCallApi" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
-            <Button x:Name="btnSignInSignOut" Text="Sign in" Clicked="OnSignInSignOut" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
+            <Button x:Name="btnEditProfile" Text="Edit Profile" Clicked="OnEditProfile" VerticalOptions="End" HorizontalOptions="FillAndExpand" />
+            <Button x:Name="btnCallApi" Text="Call API" Clicked="OnCallApi" VerticalOptions="End" HorizontalOptions="FillAndExpand" />
+            <Button x:Name="btnSignInSignOut" Text="Sign in" Clicked="OnSignInSignOut" VerticalOptions="End" HorizontalOptions="FillAndExpand" />
+            <Button x:Name="btnSignInSignOut" Text="Sign in with facebook" Clicked="OnSignInSignOut" VerticalOptions="End" HorizontalOptions="FillAndExpand" />
         </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>

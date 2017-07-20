@@ -24,15 +24,12 @@ namespace XamarinB2C
 		//Aspuru
 		public bool loggingUser;
 		public bool loggedUser;
-        DocumentClient documentClient;
-        Uri collectionLink;
         public MainPage()
         {
             InitializeComponent();
 			loggingUser = false;
 			loggedUser = false;
-			collectionLink = UriFactory.CreateDocumentCollectionUri(App.DatabaseName, App.CollectionName);
-
+			
 		}
         protected override async void OnAppearing()
         {
@@ -170,18 +167,8 @@ namespace XamarinB2C
                 string responseString = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    documentClient = new DocumentClient(new Uri(App.EndpointUri), App.accKey);
-                    lblApi.Text = $"Response from API {App.ApiEndpoint} | {responseString}";
-                    TodoItem item = new TodoItem();
-                    item.Name = "test";
-                    item.Notes = "test notes";
-                    item.Done = true;
-                    var result = await SaveTodoItemAsync(item,true);
-                    var list = await GetTodoItemsAsync();
-                    if(list!=null)
-                    {
-                        lst.ItemsSource = list;
-                    }
+                    var list =  Newtonsoft.Json.JsonConvert.DeserializeObject<List<TodoItem>>(responseString);
+                    lst.ItemsSource = list;
                 }
                 else
                 {
@@ -250,53 +237,6 @@ namespace XamarinB2C
             slUser.IsVisible = isSignedIn;
             lblApi.Text = "";
         }
-
-
-
-		public async Task<List<TodoItem>> GetTodoItemsAsync()
-		{
-			var Items = new List<TodoItem>();
-
-			try
-			{
-                var query = documentClient.CreateDocumentQuery<TodoItem>(collectionLink)
-								  .AsDocumentQuery();
-				while (query.HasMoreResults)
-				{
-					Items.AddRange(await query.ExecuteNextAsync<TodoItem>());
-				}
-			}
-			catch (DocumentClientException ex)
-			{
-				Debug.WriteLine("Error: ", ex.Message);
-			}
-
-			return Items;
-		}
-
-        public async Task<bool> SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
-		{
-			try
-			{
-				if (isNewItem)
-				{
-					await documentClient.CreateDocumentAsync(collectionLink, item);
-                    return true;
-				}
-				else
-				{
-					await documentClient.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(App.DatabaseName, App.CollectionName, item.Id), item);
-				    return true;
-                }
-			}
-			catch (DocumentClientException ex)
-			{
-				Debug.WriteLine("Error: ", ex.Message);
-                return false;
-			}
-
-            return false;
-		}
 
     }
 
