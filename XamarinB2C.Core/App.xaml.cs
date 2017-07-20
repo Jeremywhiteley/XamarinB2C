@@ -28,11 +28,7 @@ namespace XamarinB2C
 		public static string AuthorityPasswordReset = $"{AuthorityBase}{PolicyResetPassword}";
 
 
-		public static readonly string EndpointUri = "https://b2cdev.documents.azure.com:443/";
-		public static readonly string DatabaseName = "ToDoList";
-		public static readonly string CollectionName = "Items";
-		public static string accKey = "4qIWjbeQc3QB8ukxRQXtrYer4VZLVzlwcwXxYVrXt1kqf0s4obpLER49oC3Fx9RTOV2VS9q0vsLCf4S6yAgQTQ==";
-
+		
 
 		public static UIParent UiParent = null;
         public App()
