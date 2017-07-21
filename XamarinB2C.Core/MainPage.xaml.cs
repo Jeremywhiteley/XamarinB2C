@@ -15,6 +15,7 @@ using Microsoft.Azure.Documents.Client;
 using XamarinB2C.Core.Model;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Linq;
+using Newtonsoft.Json;
 
 namespace XamarinB2C
 {
@@ -29,25 +30,17 @@ namespace XamarinB2C
             InitializeComponent();
 			loggingUser = false;
 			loggedUser = false;
-			
 		}
+
+
         protected override async void OnAppearing()
         {
-
-            //Aspuru: I commented this line
-            //UpdateSignInState(false);
-
-            // Check to see if we have a User
-            // in the cache already.
-
+            
             if (loggingUser == false && loggedUser == false)
             {
 
                 try
                 {
-
-                    //AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.Authority, false);
-                    //Aspuru
                     AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(
                         App.Scopes,
                         GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn),
@@ -58,17 +51,17 @@ namespace XamarinB2C
                 }
                 catch (Exception ex)
                 {
-                    // Uncomment for debugging purposes
-                    //await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
-
-                    //Aspuru: Added for debugging
-                    Debug.WriteLine("Exception:", ex.ToString());
-
-                    // Doesn't matter, we go in interactive mode
                     UpdateSignInState(false);
                 }
             }
         }
+
+
+        /// <summary>
+        /// Event for the sign in sign out.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         async void OnSignInSignOut(object sender, EventArgs e)
         {
             loggingUser = true;
@@ -76,9 +69,7 @@ namespace XamarinB2C
             {
                 if (btnSignInSignOut.Text == "Sign in")
                 {
-					//AuthenticationResult ar = await App.PCA.AcquireTokenAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
-
-					//Aspuru
+					
 					AuthenticationResult ar = await App.PCA.AcquireTokenAsync(
 						App.Scopes,
 						GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
@@ -99,14 +90,6 @@ namespace XamarinB2C
             }
             catch(Exception ex)
             {
-
-				//Aspuru: Added for debugging
-				Debug.WriteLine("Exception:", ex.ToString());
-
-
-				// Checking the exception message 
-				// should ONLY be done for B2C
-				// reset and not any other error.
 				if (ex.Message.Contains("AADB2C90118"))
                     OnPasswordReset();
                 // Alert if any exception excludig user cancelling sign-in dialog
@@ -115,6 +98,12 @@ namespace XamarinB2C
             }
         }
 
+        /// <summary>
+        /// Gets the user by policy.
+        /// </summary>
+        /// <returns>The user by policy.</returns>
+        /// <param name="users">Users.</param>
+        /// <param name="policy">Policy.</param>
         private IUser GetUserByPolicy(IEnumerable <IUser> users, string policy)
         {
             foreach (var user in users)
@@ -126,6 +115,11 @@ namespace XamarinB2C
             return null;
         }
 
+        /// <summary>
+        /// Base64s the URL decode.
+        /// </summary>
+        /// <returns>The URL decode.</returns>
+        /// <param name="s">S.</param>
         private string Base64UrlDecode(string s)
         {
             s = s.Replace('-', '+').Replace('_', '/');
@@ -135,6 +129,10 @@ namespace XamarinB2C
             return decoded;
         }
 
+        /// <summary>
+        /// Updates the user info.
+        /// </summary>
+        /// <param name="ar">Ar.</param>
         public void UpdateUserInfo(AuthenticationResult ar)
         {
             JObject user = ParseIdToken(ar.IdToken);
@@ -142,6 +140,11 @@ namespace XamarinB2C
             lblId.Text = user["oid"]?.ToString();             
         }
 
+        /// <summary>
+        /// Parses the identifier token.
+        /// </summary>
+        /// <returns>The identifier token.</returns>
+        /// <param name="idToken">Identifier token.</param>
         JObject ParseIdToken(string idToken)
         {
             // Get the piece with actual user info
@@ -150,6 +153,11 @@ namespace XamarinB2C
             return JObject.Parse(idToken);
         }
 
+        /// <summary>
+        /// Event for calling webp API to connect cosmosDB and get data from it.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         async void OnCallApi(object sender, EventArgs e)
         {
             try
@@ -157,17 +165,15 @@ namespace XamarinB2C
                 lblApi.Text = $"Calling API {App.ApiEndpoint}";
                 AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.Authority, false);
                 string token = ar.AccessToken;
-
                 // Get data from API
                 HttpClient client = new HttpClient();
-                //client.DefaultRequestHeaders.Add("x-zumo-auth", token);
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, App.ApiEndpoint);
                 message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage response = await client.SendAsync(message);
                 string responseString = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    var list =  Newtonsoft.Json.JsonConvert.DeserializeObject<List<TodoItem>>(responseString);
+                    var list =  JsonConvert.DeserializeObject<List<TodoItem>>(responseString);
                     lst.ItemsSource = list;
                 }
                 else
@@ -183,37 +189,33 @@ namespace XamarinB2C
             }
             catch (Exception ex)
             {
-
-				//Aspuru: Added for debugging
+                //Aspuru: Added for debugging
 				Debug.WriteLine("Exception:", ex.ToString());
-
-
-				await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
+                await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
 
+        /// <summary>
+        /// Ons the edit profile.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
         async void OnEditProfile(object sender, EventArgs e)
         {
             try
             {
-                // KNOWN ISSUE:
-                // User will get prompted 
-                // to pick an IdP again.
                 AuthenticationResult ar = await App.PCA.AcquireTokenAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicyEditProfile), UIBehavior.SelectAccount, string.Empty, null, App.AuthorityEditProfile, App.UiParent);
                 UpdateUserInfo(ar);
             }
             catch (Exception ex)
             {
-
-				//Aspuru: Added for debugging
-				Debug.WriteLine("Exception:", ex.ToString());
-
-
-				// Alert if any exception excludig user cancelling sign-in dialog
 				if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
                     await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
+        /// <summary>
+        /// Method for password reset using password reset policy using MSAL .
+        /// </summary>
         async void OnPasswordReset()
         {
             try
@@ -229,6 +231,10 @@ namespace XamarinB2C
             }
         }
 
+        /// <summary>
+        /// Updates the state of the sign in.
+        /// </summary>
+        /// <param name="isSignedIn">If set to <c>true</c> is signed in.</param>
         void UpdateSignInState(bool isSignedIn)
         {
             btnSignInSignOut.Text = isSignedIn ? "Sign out" : "Sign in";

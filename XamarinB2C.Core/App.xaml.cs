@@ -6,21 +6,17 @@ namespace XamarinB2C
 {
     public partial class App : Application
     {
-        public static bool UseMockDataStore = true;
-        public static string BackendUrl = "https://localhost:5000";
-        public static IDictionary<string, string> LoginParameters => null;
-
         public static PublicClientApplication PCA = null;
 
 		// Azure AD B2C Coordinates
-		public static string Tenant = "MedB2CTenent.onmicrosoft.com";//"fabrikamb2c.onmicrosoft.com";
-		public static string ClientID = "dfd431b5-d2e9-4429-9165-870e450d5994";//"90c0fe63-bcf2-44d5-8fb7-b8bbc0b29dc6";
-		public static string PolicySignUpSignIn = "B2C_1_B2C_SUSI";//"b2c_1_susi";
+		public static string Tenant = "MedB2CTenent.onmicrosoft.com";
+		public static string ClientID = "dfd431b5-d2e9-4429-9165-870e450d5994";
+		public static string PolicySignUpSignIn = "B2C_1_B2C_SUSI";
 		public static string PolicyEditProfile = "b2c_1_edit_profile";
 		public static string PolicyResetPassword = "b2c_1_reset";
 
-		public static string[] Scopes = { "https://MedB2CTenent.onmicrosoft.com/demoapi/read" };//{ "https://fabrikamb2c.onmicrosoft.com/demoapi/demo.read" };
-		public static string ApiEndpoint = "http://b2capidev.azurewebsites.net/api/values";//"https://fabrikamb2chello.azurewebsites.net/hello";
+		public static string[] Scopes = { "https://MedB2CTenent.onmicrosoft.com/demoapi/read" };
+		public static string ApiEndpoint = "http://b2capidev.azurewebsites.net/api/values";
 
 		public static string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 		public static string Authority = $"{AuthorityBase}{PolicySignUpSignIn}";
@@ -28,9 +24,10 @@ namespace XamarinB2C
 		public static string AuthorityPasswordReset = $"{AuthorityBase}{PolicyResetPassword}";
 
 
-		
-
 		public static UIParent UiParent = null;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:XamarinB2C.App"/> class.
+        /// </summary>
         public App()
         {
             InitializeComponent();

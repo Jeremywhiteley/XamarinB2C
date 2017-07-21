@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace XamarinB2C.Core.Model
 {
+    /// <summary>
+    /// Todo item.
+    /// </summary>
 	public class TodoItem
 	{
 		[JsonProperty(PropertyName = "id")]
