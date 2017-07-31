@@ -23,6 +23,9 @@ namespace XamarinB2C
 		public static string AuthorityEditProfile = $"{AuthorityBase}{PolicyEditProfile}";
 		public static string AuthorityPasswordReset = $"{AuthorityBase}{PolicyResetPassword}";
 
+		public static string databaseId = "ToDoList";
+		public static string collectionId = "Items";
+		public static string accURL = "https://b2cdev.documents.azure.com:443/";
 
 		public static UIParent UiParent = null;
         /// <summary>

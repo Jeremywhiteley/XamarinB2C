@@ -22,20 +22,25 @@ namespace XamarinB2C
     public partial class MainPage : ContentPage
     {
 
-		//Aspuru
-		public bool loggingUser;
-		public bool loggedUser;
+        //Aspuru
+        public bool loggingUser;
+        public bool loggedUser;
+        string resourceToken = null;
+        public string UserId { get; private set; }
+
+        private Uri collectionLink = UriFactory.CreateDocumentCollectionUri(App.databaseId, App.collectionId);
+        public DocumentClient Client { get; private set; }
         public MainPage()
         {
             InitializeComponent();
-			loggingUser = false;
-			loggedUser = false;
-		}
+            loggingUser = false;
+            loggedUser = false;
+        }
 
 
         protected override async void OnAppearing()
         {
-            
+
             if (loggingUser == false && loggedUser == false)
             {
 
@@ -69,12 +74,12 @@ namespace XamarinB2C
             {
                 if (btnSignInSignOut.Text == "Sign in")
                 {
-					
-					AuthenticationResult ar = await App.PCA.AcquireTokenAsync(
-						App.Scopes,
-						GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
-                    
-					UpdateUserInfo(ar);
+
+                    AuthenticationResult ar = await App.PCA.AcquireTokenAsync(
+                        App.Scopes,
+                        GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.UiParent);
+
+                    UpdateUserInfo(ar);
                     UpdateSignInState(true);
                     loggingUser = false;
                     loggedUser = true;
@@ -88,9 +93,9 @@ namespace XamarinB2C
                     UpdateSignInState(false);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-				if (ex.Message.Contains("AADB2C90118"))
+                if (ex.Message.Contains("AADB2C90118"))
                     OnPasswordReset();
                 // Alert if any exception excludig user cancelling sign-in dialog
                 else if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
@@ -104,7 +109,7 @@ namespace XamarinB2C
         /// <returns>The user by policy.</returns>
         /// <param name="users">Users.</param>
         /// <param name="policy">Policy.</param>
-        private IUser GetUserByPolicy(IEnumerable <IUser> users, string policy)
+        private IUser GetUserByPolicy(IEnumerable<IUser> users, string policy)
         {
             foreach (var user in users)
             {
@@ -137,7 +142,7 @@ namespace XamarinB2C
         {
             JObject user = ParseIdToken(ar.IdToken);
             lblName.Text = user["name"]?.ToString();
-            lblId.Text = user["oid"]?.ToString();             
+            lblId.Text = user["oid"]?.ToString();
         }
 
         /// <summary>
@@ -162,20 +167,36 @@ namespace XamarinB2C
         {
             try
             {
+
                 lblApi.Text = $"Calling API {App.ApiEndpoint}";
                 AuthenticationResult ar = await App.PCA.AcquireTokenSilentAsync(App.Scopes, GetUserByPolicy(App.PCA.Users, App.PolicySignUpSignIn), App.Authority, false);
                 string token = ar.AccessToken;
+                JObject user = ParseIdToken(ar.IdToken);
                 // Get data from API
                 HttpClient client = new HttpClient();
                 HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, App.ApiEndpoint);
+                client.DefaultRequestHeaders.Add("UserID", user["oid"]?.ToString());
                 message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 HttpResponseMessage response = await client.SendAsync(message);
-                string responseString = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                var resourceTokenJson = JsonConvert.DeserializeObject<JObject>(responseString);
+                resourceToken = resourceTokenJson.GetValue("token").ToString();
+                UserId = resourceTokenJson.GetValue("userid").ToString();
+
+                if(resourceToken != null)
                 {
-                    var list =  JsonConvert.DeserializeObject<List<TodoItem>>(responseString);
-                    lst.ItemsSource = list;
-                }
+                    Client = new DocumentClient(new System.Uri(App.accURL), resourceToken);
+					TodoItem item = new TodoItem();
+					item.Name = "Test2";
+					item.Notes = "Test2  Notes";
+					item.Done = true;
+					await SaveTodoItemAsync(item,true);
+					var result = await GetTodoItemsAsync();
+                    if(result!=null){
+					    lst.ItemsSource = result;
+                     }
+				}
                 else
                 {
                     lblApi.Text = $"Error calling API {App.ApiEndpoint} | {responseString}";
@@ -183,14 +204,14 @@ namespace XamarinB2C
             }
             catch (MsalUiRequiredException ex)
             {
-				//Aspuru: Added for debugging
-				Debug.WriteLine("Exception:", ex.ToString());
+                //Aspuru: Added for debugging
+                Debug.WriteLine("Exception:", ex.ToString());
                 await DisplayAlert($"Session has expired, please sign out and back in.", ex.ToString(), "Dismiss");
             }
             catch (Exception ex)
             {
                 //Aspuru: Added for debugging
-				Debug.WriteLine("Exception:", ex.ToString());
+                Debug.WriteLine("Exception:", ex.ToString());
                 await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
@@ -209,7 +230,7 @@ namespace XamarinB2C
             }
             catch (Exception ex)
             {
-				if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
+                if (((ex as MsalException)?.ErrorCode != "authentication_canceled"))
                     await DisplayAlert($"Exception:", ex.ToString(), "Dismiss");
             }
         }
@@ -244,7 +265,62 @@ namespace XamarinB2C
             lblApi.Text = "";
         }
 
+
+		/// <summary>
+		/// Method for getting the list of TotDoItem list
+		/// </summary>
+		/// <returns>The todo items async.</returns>
+		public async Task<List<TodoItem>> GetTodoItemsAsync()
+		{
+			var Items = new List<TodoItem>();
+
+			try
+			{
+				var query = Client.CreateDocumentQuery<TodoItem>(collectionLink)
+								  .AsDocumentQuery();
+				while (query.HasMoreResults)
+				{
+					Items.AddRange(await query.ExecuteNextAsync<TodoItem>());
+				}
+			}
+			catch (DocumentClientException ex)
+			{
+				Debug.WriteLine("Error: ", ex.Message);
+			}
+
+			return Items;
+		}
+
+		/// <summary>
+		/// Method for saving the totdoitem object
+		/// </summary>
+		/// <returns>The todo item async.</returns>
+		/// <param name="item">Item.</param>
+		/// <param name="isNewItem">If set to <c>true</c> is new item.</param>
+		public async Task<bool> SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
+		{
+			try
+			{
+				if (isNewItem)
+				{
+					var result=await Client.CreateDocumentAsync(collectionLink, item);
+					return true;
+				}
+				else
+				{
+					await Client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(App.databaseId, App.collectionId, item.Id), item);
+					return true;
+				}
+			}
+			catch (DocumentClientException ex)
+			{
+				Debug.WriteLine("Error: ", ex.Message);
+				return false;
+			}
+
+			return false;
+		}
     }
 
-    
+
 }
