@@ -188,6 +188,7 @@ namespace XamarinB2C
                 {
                     Client = new DocumentClient(new System.Uri(App.accURL), resourceToken);
 					TodoItem item = new TodoItem();
+                    item.userid = UserId;
 					item.Name = "Test2";
 					item.Notes = "Test2  Notes";
 					item.Done = true;

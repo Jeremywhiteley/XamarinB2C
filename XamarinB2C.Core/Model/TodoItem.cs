@@ -11,6 +11,9 @@ namespace XamarinB2C.Core.Model
 		[JsonProperty(PropertyName = "id")]
 		public string Id { get; set; }
 
+		[JsonProperty(PropertyName = "userid")]
+		public string userid { get; set; }
+
 		[JsonProperty(PropertyName = "name")]
 		public string Name { get; set; }
 
